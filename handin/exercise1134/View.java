@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.*;
 import javax.swing.border.*;
 
 /**
@@ -36,35 +37,38 @@ public class View
         contentPane.setBorder(new EmptyBorder( 10, 10, 10, 10));
 
         display = new JTextField(); //maak een nieuwe textfeld
+        display.setText("Voeg text toe of verwijder text"); //dummy data
         display.getDocument().addDocumentListener(new DocumentListener() {
+
                 public void changedUpdate(DocumentEvent e) {
-                    warn();
+                    System.out.println(display.getText());
                 }
 
                 public void removeUpdate(DocumentEvent e) {
-                    warn();
+                    if(display.getText().equals("")){
+                        System.out.println("Het veld is leegemaakt en niet meer aanpasbaar");
+                        display.setEditable(false);
+                    }else{
+                        System.out.println(display.getText());
+                    }
                 }
 
                 public void insertUpdate(DocumentEvent e) {
-                    warn();
+                    System.out.println(display.getText());
                 }
 
-                public void warn() {
-                    if (Integer.parseInt(textField.getText())<=0){
-                        JOptionPane.showMessageDialog(null,
-                            "Error: Please enter number bigger than 0", "Error Massage",
-                            JOptionPane.ERROR_MESSAGE);
-                    }
-                }
+               
             });
 
         //display.addActionListener(this); //voeg een actionlistener toe zie actionperformed
         contentPane.add(display); //voeg dit textfeld aan postie noord toe
 
+        /**
         display2 = new JTextField(); //maak een nieuwe textfeld
         display2.setEditable(false); //veld niet aanpasbaar
         contentPane.add(display2); //voeg dit textfeld aan postie noord toe
-
+**/
+        
         //JPanel buttonPanel = new JPanel(new GridLayout(4, 4));
         //contentPane.add(buttonPanel, BorderLayout.CENTER);
         status = new JLabel("Opdracht 11.34"); //maak een nieuwe label
